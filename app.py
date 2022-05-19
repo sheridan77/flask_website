@@ -53,8 +53,8 @@ def register():
             info = '用户名不符合规范'
             return render_template('register.html', **locals())
         if not res:
-            sql = 'insert into user_info(username, password) values (%s, %s)'
-            cursor.execute(sql, (username, md5(password)))
+            sql = 'insert into user_info(username, password, keyword_list) values (%s, %s, %s)'
+            cursor.execute(sql, (username, md5(password), json.dumps([], ensure_ascii=False)))
             db.commit()
             response = redirect('/login/')
             return response
@@ -106,30 +106,31 @@ def index_website(website_name):
     return render_template(f'index_{website_name}.html')
 
 
-@app.route('/facebook/first_page/')
+@app.route('/facebook/first_page/', methods=['GET', 'POST'])
 @login_valid
 def facebook_first_page():
-    sql = 'select story_fbid, publish_time, content, image ' \
-          'from facebook_article ' \
-          'where key_word = %s ' \
-          'order by publish_time desc'
-    cursor.execute(sql, ('mustang', ))
-    result = cursor.fetchall()
-    res_list = list()
-    for res in result:
-        story_fbid, publish_time, content, image = res
-        if image:
-            image = json.loads(image)
-        res_list.append(
-            {
-                'story_fbid': story_fbid,
-                'publish_time': publish_time,
-                'content': content,
-                'image': image
-            }
-        )
+    if request.method == 'GET':
+        sql = 'select story_fbid, publish_time, content, image ' \
+              'from facebook_article ' \
+              'where key_word = %s ' \
+              'order by publish_time desc'
+        cursor.execute(sql, ('mustang', ))
+        result = cursor.fetchall()
+        res_list = list()
+        for res in result:
+            story_fbid, publish_time, content, image = res
+            if image:
+                image = json.loads(image)
+            res_list.append(
+                {
+                    'story_fbid': story_fbid,
+                    'publish_time': publish_time,
+                    'content': content,
+                    'image': image
+                }
+            )
 
-    return render_template('facebook_index.html', key='Mustang', article=res_list)
+        return render_template('facebook_index.html', key='Mustang', article=res_list)
 
 
 # @app.route('/facebook/yours/')
