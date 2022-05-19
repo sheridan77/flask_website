@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.83.1">
+    <title>ZRQ的小网站登陆</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/heroes/">
+
+
+
+    <!-- Bootstrap core CSS -->
+<link href="{{ url_for('static', filename='assets/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='login.css') }}" rel="stylesheet">
+  </head>
+  <body>
+
+<main>
+  <h1 class="visually-hidden">登陆</h1>
+  <img class="mb-4" src="{{ url_for('static', filename='assets/brand/watermelon.svg') }}" alt="" width="100" height="100">
+
+  <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+    <div class="row align-items-center g-lg-5 py-5">
+      <div class="col-lg-7 text-center text-lg-start">
+        <h1 class="display-4 fw-bold lh-1 mb-3">请登陆系统</h1>
+        <p class="col-lg-10 fs-4">登录系统，可以保存您的请求历史，并保护您的请求不被泄露.</p>
+      </div>
+      <div class="col-md-10 mx-auto col-lg-5">
+        <form method="post" class="p-4 p-md-5 border rounded-3 bg-light" role="form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput" placeholder="用户名" name="username">
+            <label for="floatingInput">用户名</label>{{ info }}
+          </div>
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="密码" name="password">
+            <label for="floatingPassword">密码</label>
+          </div>
+{#          <div class="checkbox mb-3">#}
+{#            <label>#}
+{#              <input type="checkbox" value="remember-me"> Remember me#}
+{#            </label>#}
+{#          </div>#}
+          <button class="w-100 btn btn-lg btn-primary" type="submit">登陆</button>
+            <p></p>
+          <button class="w-100 btn btn-lg btn-danger" type="button" href="/register/">注册</button>
+          <hr class="my-4">
+          </form>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+
+    <script src="{{ url_for('static', filename='assets/dist/js/bootstrap.bundle.min.js') }}"></script>
+
+
+  </body>
+</html>
