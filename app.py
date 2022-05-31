@@ -155,7 +155,7 @@ if __name__ == '__main__':
     #     use_unicode=True
     # )
     cursor = db.cursor()
-    app.run('0.0.0.0', 5050, debug=True)
+    app.run('0.0.0.0', 7897, debug=True)
 
 
 
